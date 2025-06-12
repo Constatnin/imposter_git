@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
     submitBtn.addEventListener("click", function () {
       const name = input.value.trim();
       if (name) {
-        front.textContent = name;  // setzt den eingegebenen Namen auf die Vorderseite
+        front.textContent = name;  // setzt den eingegebenen Namen auf die Vorderseite///////////////////////////////////////////////////////
         // Namen anzeigen (bestätigen)
         output.innerHTML = `<p>${name}</p>`;
 
