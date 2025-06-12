@@ -1,18 +1,34 @@
-let spieler_liste_index = 0;
-
 document.addEventListener("DOMContentLoaded", function () {
   const button = document.getElementById("button_header");
   const ausgabe = document.getElementById("spieler");
+  const startButton = document.getElementById("button_start");
 
-    // Leere Liste zum Speichern der Namen
+  // Liste zum Speichern der Spielernamen
   const spieler_liste = [];
 
-  button.addEventListener("click", function () {
-    // Container-Div für dieses Eingabe-Set
-    const container = document.createElement("div");
-    container.className = "spieler"; // optional fürs Styling
+  // Flag, ob das Spiel gestartet wurde
+  let spielStartet = false;
 
-    // Neues Input-Feld
+  // Klick auf "+" Button: neues Eingabefeld + Button für Namen hinzufügen
+  button.addEventListener("click", function () {
+    // Container für neuen Spieler
+    const container = document.createElement("div");
+    container.className = "spieler";
+
+    // Container für den Flip (innen)
+    const inner = document.createElement("div");
+    inner.className = "spieler-inner";
+
+    // Front-Seite (Name)
+    const front = document.createElement("div");
+    front.className = "spieler-front";
+
+    // Back-Seite (Text nach Flip)
+    const back = document.createElement("div");
+    back.className = "spieler-back";
+    back.textContent = "Hallo";
+
+    // Input für Namen
     const input = document.createElement("input");
     input.type = "text";
     input.placeholder = "Dein Name";
@@ -21,49 +37,69 @@ document.addEventListener("DOMContentLoaded", function () {
     const submitBtn = document.createElement("button");
     submitBtn.textContent = "Absenden";
 
-    // Ausgabe-Div
+    // Ausgabe-Div für Meldungen
     const output = document.createElement("div");
 
+    // Event Listener Absenden-Button
     submitBtn.addEventListener("click", function () {
       const name = input.value.trim();
       if (name) {
+        front.textContent = name;  // setzt den eingegebenen Namen auf die Vorderseite
+        // Namen anzeigen (bestätigen)
         output.innerHTML = `<p>${name}</p>`;
 
-        // Name zur Liste hinzufügen
+        // Namen in Liste speichern
         spieler_liste.push(name);
-        // Liste auf der Seite neu darstellen
 
-        console.log(spieler_liste); // für Kontrolle in der Konsole
+        // Namen auch in Front-Div setzen
+        front.textContent = name;
 
-        // Eingabefeld + Button entfernen nach Absenden
+        console.log(spieler_liste);
+
+        // Eingabefeld + Button entfernen
         input.remove();
         submitBtn.remove();
+
+        // Flip-Event nur erlauben, wenn Spiel gestartet ist
+        container.addEventListener("click", function () {
+          if (!spielStartet) return; // Kein Flip, wenn nicht gestartet
+          container.classList.toggle("flipped");
+        });
       } else {
-        output.innerHTML = `<p>Bitte gib deinen Namen ein.</p>`;
+        output.textContent = "Bitte gib deinen Namen ein.";
       }
     });
 
-    // Aufbau: Input + Button + Ausgabe in den Container
+    // Zusammensetzen der Flip-Struktur
+    inner.appendChild(front);
+    inner.appendChild(back);
+    container.appendChild(inner);
+
+    // Eingabe-Elemente anhängen
     container.appendChild(input);
     container.appendChild(submitBtn);
     container.appendChild(output);
 
-    // Container an den Hauptbereich anhängen
+    // Spieler-Container an die Seite anhängen
     ausgabe.appendChild(container);
-
-
-    
   });
-  // Funktion zum Aktualisieren der Ausgabe-Liste
-  function renderSpielerListe() {
-    listeAnzeigen.innerHTML = ""; // Leeren
 
-    // Jeden Namen als <li> hinzufügen
-    spieler_liste.forEach(function (spieler) {
-      const li = document.createElement("li");
-      li.textContent = spieler;
-      listeAnzeigen.appendChild(li);
-    });
-  }
+  // Event Listener Start-Button
+  startButton.addEventListener("click", function () {
+    spielStartet = true; // Spiel gestartet
+
+    const anzahlSpieler = spieler_liste.length;
+
+    if (anzahlSpieler < 3) {
+      console.log("Nicht genug Spieler vorhanden.");
+      return;
+    }
+
+    // Zufälliger Index zwischen 0 und anzahlSpieler-1
+    const index_imposter = Math.floor(Math.random() * anzahlSpieler);
+
+    console.log("Spieleranzahl:", anzahlSpieler);
+    console.log("Zufallszahl zwischen 0 und Spieleranzahl-1:", index_imposter);
+    console.log("Imposter:", spieler_liste[index_imposter]);
+  });
 });
-

@@ -97,11 +97,12 @@ p{
 </head>
 <body>
     <script>
-        let spieler_liste_index = 0;
+
 
 document.addEventListener("DOMContentLoaded", function () {
   const button = document.getElementById("button_header");
   const ausgabe = document.getElementById("spieler");
+  const startButton = document.getElementById("button_start");
 
     // Leere Liste zum Speichern der Namen
   const spieler_liste = [];
@@ -131,15 +132,21 @@ document.addEventListener("DOMContentLoaded", function () {
         // Name zur Liste hinzufügen
         spieler_liste.push(name);
         // Liste auf der Seite neu darstellen
+        startButton.click(); // Automatisch Start-Button triggern
+
 
         console.log(spieler_liste); // für Kontrolle in der Konsole
-
+       
         // Eingabefeld + Button entfernen nach Absenden
         input.remove();
         submitBtn.remove();
+       
+        
       } else {
         output.innerHTML = `<p>Bitte gib deinen Namen ein.</p>`;
       }
+
+
     });
 
     // Aufbau: Input + Button + Ausgabe in den Container
@@ -153,18 +160,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
     
   });
-  // Funktion zum Aktualisieren der Ausgabe-Liste
-  function renderSpielerListe() {
-    listeAnzeigen.innerHTML = ""; // Leeren
 
-    // Jeden Namen als <li> hinzufügen
-    spieler_liste.forEach(function (spieler) {
-      const li = document.createElement("li");
-      li.textContent = spieler;
-      listeAnzeigen.appendChild(li);
-    });
-  }
+      
+
+startButton.addEventListener("click", function () {
+  const anzahlSpieler = spieler_liste.length;
+  console.log("Spieleranzahl:", anzahlSpieler);
+  
 });
+
+
+});
+
+
 
 
     </script>
@@ -183,7 +191,7 @@ document.addEventListener("DOMContentLoaded", function () {
     </button>
 </div>
     </header>
-    <div class="start_info">   <button class="button_start">
+    <div class="start_info">   <button class="button_start" id="button_start">
         End/Start
     </button>
      <button class="button_info">
