@@ -1,0 +1,88 @@
+/*header*/
+header{
+    display: flex; 
+    justify-content: center; 
+
+}
+
+h1{
+    font-size: 60px;
+    margin: 0; 
+    padding: 0; 
+    color: #EFF1ED;
+    font-weight: bold;
+}
+h2{
+    font-size: 50px; 
+    margin: 0; 
+    padding: 0; 
+    color: #EFF1ED;
+    font-weight: bold;
+}
+
+
+.header2{
+    margin: 5px;
+    width: 60px; 
+    align-content: center; 
+
+
+}
+.button_header{
+    
+    width: 100px;
+    height: 100px; 
+    margin-left: 5px;
+    margin-top: 20px;  
+    margin-right: 20px; 
+}
+/*body*/
+body{
+    background-color: #232F35;
+}
+.start_info{
+    display: flex;
+    justify-content: center;
+    margin: 3px;
+    padding: 4px; 
+
+
+}
+.button_start{
+    background-color: #EFF1ED; 
+    margin: 8px;
+    padding: 4px; 
+    border-radius: 3px;  
+    width: 150px; 
+    font-size: 25px; 
+    font-weight: bold; 
+}
+.button_info{
+    background-color: #EFF1ED;
+    margin: 8px;
+    padding: 4px; 
+    border-radius: 3px;  
+    width: 150px; 
+    font-size: 25px; 
+    font-weight: bold; 
+}
+.spieler{
+    display: flex; 
+    background-color: #796C70; 
+    margin: 8px;
+    padding: 4px; 
+    border-radius: 3px;  
+    width: 310px; 
+    justify-content: center; 
+    
+}
+.außen{
+    display: flex; 
+    justify-content: center; 
+}
+p{
+    padding: 0;
+    margin: 0;
+    font-size: 25px; 
+    font-weight: bold; 
+}
