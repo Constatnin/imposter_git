@@ -225,12 +225,12 @@ document.addEventListener("DOMContentLoaded", function () {
     container.appendChild(inner);
 
     // Eingabe-Elemente anhängen
-    front.appendChild(input);
-    front.appendChild(submitBtn);/////////////////////////////////////////////////////////////////////////////
-    front.appendChild(output);
+    container.appendChild(input);
+    container.appendChild(submitBtn);
+    container.appendChild(output);
 
     // Spieler-Container an die Seite anhängen
-    ausgabe.prepend(container);
+    ausgabe.appendChild(container);
   });
 
   // Event Listener Start-Button
@@ -260,7 +260,7 @@ document.addEventListener("DOMContentLoaded", function () {
         Imposter
       </h1>
       <h2>
-        Game
+        Wörter
       </h2>
         </div>
 <div class="header2">
