@@ -72,7 +72,7 @@ body{
     width: 150px; 
     font-size: 25px; 
     font-weight: bold; 
-}/*aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa*/
+}/**/
 
 
 
@@ -89,7 +89,7 @@ body{
   width: 100%;
   height: 100%;
   position: relative;
-  transition: transform 0.6s;
+  transition: transform 0.2s;
   transform-style: preserve-3d; /* Beide Seiten sichtbar */
 }
 
@@ -176,7 +176,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Back-Seite (Text nach Flip)
     const back = document.createElement("div");
     back.className = "spieler-back";
-    back.textContent = "Hallo";
+   
 
     // Input für Namen
     const input = document.createElement("input");
@@ -233,24 +233,50 @@ document.addEventListener("DOMContentLoaded", function () {
     ausgabe.prepend(container);
   });
 
-  // Event Listener Start-Button
-  startButton.addEventListener("click", function () {
-    spielStartet = true; // Spiel gestartet
+startButton.addEventListener("click", async function () {
+  spielStartet = true; // Spiel gestartet
 
-    const anzahlSpieler = spieler_liste.length;
+  const anzahlSpieler = spieler_liste.length;
 
-    if (anzahlSpieler < 3) {
-      console.log("Nicht genug Spieler vorhanden.");
-      return;
+  if (anzahlSpieler < 3) {
+    console.log("Nicht genug Spieler vorhanden.");
+    return;
+  }
+
+  const index_imposter = Math.floor(Math.random() * anzahlSpieler);
+
+  try {
+    const response = await fetch("wörter.json");
+    if (!response.ok) throw new Error("Datei nicht gefunden");
+    const woerter = await response.json();
+
+    const zufallsIndex = Math.floor(Math.random() * woerter.length);
+    const zufallsWort = woerter[zufallsIndex];
+
+    // Alle Spieler-Container holen
+  const alleSpielerElemente = Array.from(document.querySelectorAll(".spieler")).reverse();
+
+  // Alle Rückseiten mit dem Wort beschriften – außer Imposter
+  alleSpielerElemente.forEach((spielerElement, index) => {
+    const rueckseite = spielerElement.querySelector(".spieler-back");
+
+    if (index === index_imposter) {
+      rueckseite.textContent = "???"; // Oder leer lassen, oder "Imposter"
+    } else {
+      rueckseite.textContent = zufallsWort;
     }
-
-    // Zufälliger Index zwischen 0 und anzahlSpieler-1
-    const index_imposter = Math.floor(Math.random() * anzahlSpieler);
+  });
 
     console.log("Spieleranzahl:", anzahlSpieler);
-    console.log("Zufallszahl zwischen 0 und Spieleranzahl-1:", index_imposter);
     console.log("Imposter:", spieler_liste[index_imposter]);
-  });
+    console.log("Zufälliges Wort aus JSON:", zufallsWort);
+    console.log("Zufallszahl zwischen 0 und Spieleranzahl-1:", index_imposter);
+  } catch (err) {
+    console.error("Fehler beim Laden der Wörter:", err);
+  }
+});
+
+ 
 });
 
     </script>
