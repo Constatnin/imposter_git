@@ -155,6 +155,17 @@ p{
 .namen{
   font-size: 300px;
 }
+
+.button_absenden {
+  font-size: 20px;
+  padding: 7px 14px;
+  border-radius: 5px;
+  background-color: #EFF1ED;
+  color: black;
+  font-weight: bold;
+  
+}
+
     </style>
 </head>
 <body>
@@ -202,6 +213,14 @@ document.addEventListener("DOMContentLoaded", function () {
     // Absenden-Button
     const submitBtn = document.createElement("button");
     submitBtn.textContent = "Absenden";
+    submitBtn.className = "button_absenden";
+
+    // Enter-Taste auslösen wie Button-Klick
+input.addEventListener("keydown", function (e) {
+  if (e.key === "Enter") {
+    submitBtn.click();
+  }
+});
 
     // Ausgabe-Div für Meldungen
     const output = document.createElement("div");
