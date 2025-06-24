@@ -290,6 +290,7 @@ document.querySelectorAll(".spieler.flipped").forEach((el) => {
   }
 
   const index_imposter = Math.floor(Math.random() * anzahlSpieler);
+  const index_anfangen = Math.floor(Math.random() * anzahlSpieler);
 
   aktuellerImposterIndex = index_imposter;
 
@@ -320,6 +321,7 @@ document.querySelectorAll(".spieler.flipped").forEach((el) => {
     console.log("Imposter:", spieler_liste[index_imposter]);
     console.log("Zufälliges Wort aus JSON:", zufallsWort);
     console.log("Zufallszahl zwischen 0 und Spieleranzahl-1:", index_imposter);
+    console.log("Spieler mit dem Index:", index_anfangen, "beginnt der Spieler hat denn Namen:", spieler_liste[index_anfangen]);
   } catch (err) {
     console.error("Fehler beim Laden der Wörter:", err);
   }
