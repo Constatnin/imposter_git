@@ -114,7 +114,7 @@ body{
 
 /* Vorderseite: Name in der Mitte, blauer Hintergrund */
 .spieler-front {
-  background-color: #020202;
+  background-color: #37393a; 
   color: white;
   display: flex;
   flex-direction: column;
@@ -125,7 +125,7 @@ body{
 
 /* Rückseite: „Hallo“, lila Hintergrund, nach hinten gedreht */
 .spieler-back {
-  background-color: #606263; /* Lila */
+  background-color: #2a2e43; 
   color: white;
   transform: rotateY(180deg);
 }
@@ -152,12 +152,17 @@ document.addEventListener("DOMContentLoaded", function () {
   const button = document.getElementById("button_header");
   const ausgabe = document.getElementById("spieler");
   const startButton = document.getElementById("button_start");
+  const infoButton = document.querySelector(".button_info");
+
 
   // Liste zum Speichern der Spielernamen
   const spieler_liste = [];
 
   // Flag, ob das Spiel gestartet wurde
   let spielStartet = false;
+
+  let aktuellerImposterIndex = null;
+
 
   // Klick auf "+" Button: neues Eingabefeld + Button für Namen hinzufügen
   button.addEventListener("click", function () {
@@ -236,6 +241,12 @@ document.addEventListener("DOMContentLoaded", function () {
 startButton.addEventListener("click", async function () {
   spielStartet = true; // Spiel gestartet
 
+// Alle Spieler vor dem Start zurückdrehen
+document.querySelectorAll(".spieler.flipped").forEach((el) => {
+  el.classList.remove("flipped");
+});
+
+
   const anzahlSpieler = spieler_liste.length;
 
   if (anzahlSpieler < 3) {
@@ -244,6 +255,9 @@ startButton.addEventListener("click", async function () {
   }
 
   const index_imposter = Math.floor(Math.random() * anzahlSpieler);
+
+  aktuellerImposterIndex = index_imposter;
+
 
   try {
     const response = await fetch("wörter.json");
@@ -261,7 +275,7 @@ startButton.addEventListener("click", async function () {
     const rueckseite = spielerElement.querySelector(".spieler-back");
 
     if (index === index_imposter) {
-      rueckseite.textContent = "???"; // Oder leer lassen, oder "Imposter"
+      rueckseite.textContent = "IMPOSTER"; // Oder leer lassen, oder "Imposter"
     } else {
       rueckseite.textContent = zufallsWort;
     }
@@ -275,6 +289,19 @@ startButton.addEventListener("click", async function () {
     console.error("Fehler beim Laden der Wörter:", err);
   }
 });
+
+infoButton.addEventListener("click", function () {
+  if (aktuellerImposterIndex === null) return;
+
+  const spielerElemente = Array.from(document.querySelectorAll(".spieler")).reverse();
+  const imposterElement = spielerElemente[aktuellerImposterIndex];
+
+  if (imposterElement) {
+    imposterElement.classList.add("flipped");
+  }
+});
+
+
 
  
 });
@@ -296,10 +323,10 @@ startButton.addEventListener("click", async function () {
 </div>
     </header>
     <div class="start_info">   <button class="button_start" id="button_start">
-        End/Start
+        Start
     </button>
      <button class="button_info">
-        Info
+        Ende
     </button>
 
 
