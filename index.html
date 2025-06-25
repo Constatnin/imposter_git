@@ -160,8 +160,10 @@
   width: 200px;
   background-color: white;
   border-radius: 3px;
-  padding: 5px;
-  margin-top: 10px;
+  padding: 2px;
+  margin-top: 8px;
+  font-size: 23px;
+  font-weight: bold;
 }
 .dropdown_liste {
   background-color: #EFF1ED;
@@ -209,6 +211,7 @@
       const spieler_liste = []; // Namen werden hier gesammelt
       let spielStartet = false;
       let aktuellerImposterIndex = null;
+      let aktuellerModus = "normal";
 
       // Spielerkarte erstellen bei Klick auf "+"
       button.addEventListener("click", function () {
@@ -288,7 +291,12 @@
         aktuellerImposterIndex = index_imposter;
 
         try {
-          const response = await fetch("wörter.json");
+          let dateiname = "wörter.json";
+          if (aktuellerModus === "party") dateiname = "party.json";
+          else if (aktuellerModus === "sexy") dateiname = "sexy.json";
+          else if (aktuellerModus === "insider") dateiname = "insider.json";
+
+const response = await fetch(dateiname);
           if (!response.ok) throw new Error("Datei nicht gefunden");
           const woerter = await response.json();
           const zufallsWort = woerter[Math.floor(Math.random() * woerter.length)];
@@ -326,6 +334,14 @@
       infoToggleButton.addEventListener("click", () => {
         dropdownListe.classList.toggle("aktiv");
       });
+      const dropdownEintraege = dropdownListe.querySelectorAll("li");
+dropdownEintraege.forEach((eintrag) => {
+  eintrag.addEventListener("click", () => {
+    const text = eintrag.textContent.toLowerCase();
+    aktuellerModus = text; // setzt z.B. "party", "sexy", etc.
+    dropdownListe.classList.remove("aktiv");
+  });
+});
     });
   </script>
 </head>
@@ -336,12 +352,13 @@
   <header>
     <div class="header1">
       <h1>Imposter</h1>
-       <button class="button_info_toggle">⚙️ Menü</button>
+       <button class="button_info_toggle">Wörter</button>
   <div class="dropdown_liste" id="dropdown_liste">
     <ul>
-      <li>Regeln anzeigen</li>
-      <li>Spiel neu starten</li>
-      <li>Credits</li>
+      <li>Normal</li>
+      <li>Sexy</li>
+      <li>Party</li>
+      <li>Insider</li>
     </ul>
   </div>
     </div>
