@@ -45,6 +45,7 @@
 
     h1 {
       font-size: 60px;
+      margin-top: 12px;
     }
 
     h2 {
@@ -150,6 +151,52 @@
       color: black;
       width: 200px;
     }
+
+    /* ---------- DROPDOWN ---------- */
+
+
+
+.button_info_toggle{
+  width: 200px;
+  background-color: white;
+  border-radius: 3px;
+  padding: 5px;
+  margin-top: 10px;
+}
+.dropdown_liste {
+  background-color: #EFF1ED;
+  color: black;
+  border-radius: 5px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  position: absolute;
+  z-index: 10;
+  padding: 0 10px;
+}
+
+.dropdown_liste ul {
+  margin: 10px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dropdown_liste ul li {
+  padding: 8px 0;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  border-bottom: 1px solid #ccc;
+}
+
+.dropdown_liste ul li:last-child {
+  border-bottom: none;
+}
+
+.dropdown_liste.aktiv {
+  max-height: 200px;
+}
+
   </style>
 
   <script>
@@ -271,6 +318,14 @@
         const imposterElement = spielerElemente[aktuellerImposterIndex];
         if (imposterElement) imposterElement.classList.add("flipped");
       });
+
+            // Dropdown-Menü anzeigen/verstecken
+      const infoToggleButton = document.querySelector(".button_info_toggle");
+      const dropdownListe = document.getElementById("dropdown_liste");
+
+      infoToggleButton.addEventListener("click", () => {
+        dropdownListe.classList.toggle("aktiv");
+      });
     });
   </script>
 </head>
@@ -281,7 +336,14 @@
   <header>
     <div class="header1">
       <h1>Imposter</h1>
-      <h2>Game</h2>
+       <button class="button_info_toggle">⚙️ Menü</button>
+  <div class="dropdown_liste" id="dropdown_liste">
+    <ul>
+      <li>Regeln anzeigen</li>
+      <li>Spiel neu starten</li>
+      <li>Credits</li>
+    </ul>
+  </div>
     </div>
     <div class="header2">
       <button class="button_header" id="button_header">+</button>

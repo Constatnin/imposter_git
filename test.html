@@ -1,14 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
-  <title>Input nach Klick</title>
-  <script src="test.js" defer></script>
+  <meta charset="UTF-8" />
+  <title>Liste ausfahren</title>
+  <style>
+    .liste {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+
+    .liste.aktiv {
+      max-height: 500px; /* groß genug, damit alles reinpasst */
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    button {
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 <body>
-  <!-- Button zum Auslösen -->
-  <button id="button_header">Name eingeben</button>
 
-  <!-- Bereich, wo später das Input-Feld eingefügt wird -->
-  <div id="spieler"></div>
+  <button id="toggleBtn">Liste anzeigen</button>
+
+  <div class="wörter" id="wörter">
+    <ul>
+      <li>Eintrag 1</li>
+      <li>Eintrag 2</li>
+      <li>Eintrag 3</li>
+    </ul>
+  </div>
+
+  <script>
+    const btn = document.getElementById('toggleBtn');
+    const liste = document.getElementById('liste');
+
+    btn.addEventListener('click', () => {
+      liste.classList.toggle('aktiv');
+      btn.textContent = liste.classList.contains('aktiv') ? 'Wörter' : 'Wörter';
+    });
+  </script>
+
 </body>
 </html>
