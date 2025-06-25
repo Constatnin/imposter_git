@@ -1,290 +1,304 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Imposter</title>
-    <style>
-       /*header*/
-header{
-    display: flex; 
-    justify-content: center; 
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>Imposter</title>
 
-}
-
-h1{
-    font-size: 60px;
-    margin: 0; 
-    padding: 0; 
-    color: #EFF1ED;
-    font-weight: bold;
-}
-h2{
-    font-size: 50px; 
-    margin: 0; 
-    padding: 0; 
-    color: #EFF1ED;
-    font-weight: bold;
-}
-
-
-.header2{
-    margin: 5px;
-    width: 60px; 
-    align-content: center; 
-
-
-}
-.button_header{
-    
-    width: 100px;
-    height: 100px; 
-    margin-left: 5px;
-    margin-top: 20px;  
-    margin-right: 20px; 
-}
-/*body*/
-body{
-    background-color: #232F35;
-}
-.start_info{
-    display: flex;
-    justify-content: center;
-    margin: 3px;
-    padding: 4px; 
-
-
-}
-.button_start{
-    background-color: #EFF1ED; 
-    margin: 8px;
-    padding: 4px; 
-    border-radius: 3px;  
-    width: 150px; 
-    font-size: 25px; 
-    font-weight: bold; 
-}
-.button_info{
-    background-color: #EFF1ED;
-    margin: 8px;
-    padding: 4px; 
-    border-radius: 3px;  
-    width: 150px; 
-    font-size: 25px; 
-    font-weight: bold; 
-}/*aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa*/
-
-
-
-
-.spieler {
-  width: 200px;
-  height: 200px;
-  margin: 10px;
-  perspective: 1000px; /* 3D-Effekt aktivieren */
-  position: relative;
-}
-
-.spieler-inner {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transition: transform 0.6s;
-  transform-style: preserve-3d; /* Beide Seiten sichtbar */
-}
-
-/* Drehanimation bei .flipped */
-.spieler.flipped .spieler-inner {
-  transform: rotateY(180deg);
-}
-
-.spieler-front, .spieler-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden; /* Rückseite ausblenden, wenn nicht sichtbar */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 30px;
-  font-weight: bold;
-  border-radius: 10px;
-  box-shadow: 0 0 10px #00000055;
-}
-
-/* Vorderseite: Name in der Mitte, blauer Hintergrund */
-.spieler-front {
-  background-color: #020202;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-}
-
-/* Rückseite: „Hallo“, lila Hintergrund, nach hinten gedreht */
-.spieler-back {
-  background-color: #606263; /* Lila */
-  color: white;
-  transform: rotateY(180deg);
-}
-/**/
-.außen{
-    display: flex; 
-    justify-content: center; 
-}
-p{
-    padding: 0;
-    margin: 0;
-    font-size: 25px; 
-    font-weight: bold; 
-    
-}
-.namen{
-  font-size:20px;
-}
-    </style>
-</head>
-<body>
-    <script>
-document.addEventListener("DOMContentLoaded", function () {
-  const button = document.getElementById("button_header");
-  const ausgabe = document.getElementById("spieler");
-  const startButton = document.getElementById("button_start");
-
-  // Liste zum Speichern der Spielernamen
-  const spieler_liste = [];
-
-  // Flag, ob das Spiel gestartet wurde
-  let spielStartet = false;
-
-  // Klick auf "+" Button: neues Eingabefeld + Button für Namen hinzufügen
-  button.addEventListener("click", function () {
-    // Container für neuen Spieler
-    const container = document.createElement("div");
-    container.className = "spieler";
-
-    // Container für den Flip (innen)
-    const inner = document.createElement("div");
-    inner.className = "spieler-inner";
-
-    // Front-Seite (Name)
-    const front = document.createElement("div");
-    front.className = "spieler-front";
-
-    // Back-Seite (Text nach Flip)
-    const back = document.createElement("div");
-    back.className = "spieler-back";
-    back.textContent = "Hallo";
-
-    // Input für Namen
-    const input = document.createElement("input");
-    input.type = "text";
-    input.placeholder = "Dein Name";
-
-    // Absenden-Button
-    const submitBtn = document.createElement("button");
-    submitBtn.textContent = "Absenden";
-
-    // Ausgabe-Div für Meldungen
-    const output = document.createElement("div");
-
-    // Event Listener Absenden-Button
-    submitBtn.addEventListener("click", function () {
-      const name = input.value.trim();
-      if (name) {
-        front.textContent = name;  // setzt den eingegebenen Namen auf die Vorderseite//
-     
-
-        // Namen in Liste speichern
-        spieler_liste.push(name);
-
-        // Namen auch in Front-Div setzen
-        front.textContent = name;
-
-        console.log(spieler_liste);
-
-        // Eingabefeld + Button entfernen
-        input.remove();
-        submitBtn.remove();
-
-        // Flip-Event nur erlauben, wenn Spiel gestartet ist
-        container.addEventListener("click", function () {
-          if (!spielStartet) return; // Kein Flip, wenn nicht gestartet
-          container.classList.toggle("flipped");
-        });
-      } else {
-        output.textContent = "Bitte gib deinen Namen ein.";
-      }
-    });
-
-    // Zusammensetzen der Flip-Struktur
-    inner.appendChild(front);
-    inner.appendChild(back);
-    container.appendChild(inner);
-
-    // Eingabe-Elemente anhängen
-    front.appendChild(input);
-    front.appendChild(submitBtn);
-    front.appendChild(output);
-
-    // Spieler-Container an die Seite anhängen
-    ausgabe.prepend(container);
-  });
-
-  // Event Listener Start-Button
-  startButton.addEventListener("click", function () {
-    spielStartet = true; // Spiel gestartet
-
-    const anzahlSpieler = spieler_liste.length;
-
-    if (anzahlSpieler < 3) {
-      console.log("Nicht genug Spieler vorhanden.");
-      return;
+  <style>
+    /* ---------- GRUNDSTIL / BODY ---------- */
+    body {
+      background-color: #232F35;
     }
 
-    // Zufälliger Index zwischen 0 und anzahlSpieler-1
-    const index_imposter = Math.floor(Math.random() * anzahlSpieler);
+    p {
+      margin: 0;
+      padding: 0;
+      font-size: 200px;
+      font-weight: bold;
+    }
 
-    console.log("Spieleranzahl:", anzahlSpieler);
-    console.log("Zufallszahl zwischen 0 und Spieleranzahl-1:", index_imposter);
-    console.log("Imposter:", spieler_liste[index_imposter]);
-  });
-});
+    .namen {
+      font-size: 300px;
+    }
 
-    </script>
-    <header>
-        <div class="header1">
-      <h1>
-        Imposter
-      </h1>
-      <h2>
-        Game
-      </h2>
-        </div>
-<div class="header2">
-    <button class="button_header" id="button_header">
-        +
-    </button>
-</div>
-    </header>
-    <div class="start_info">   <button class="button_start" id="button_start">
-        End/Start
-    </button>
-     <button class="button_info">
-        Info
-    </button>
+    /* ---------- HEADER ---------- */
+    header {
+      display: flex;
+      justify-content: center;
+      padding-right: 40px;
+    }
 
+    .header2 {
+      margin: 5px;
+      width: 60px;
+      align-content: center;
+    }
 
-</div>
-<div class="außen">
- <div id="spieler"></div>
-</div>
+    h1, h2 {
+      margin: 0;
+      padding: 0;
+      color: #EFF1ED;
+      font-weight: bold;
+    }
 
+    h1 {
+      font-size: 60px;
+    }
 
-   <footer>
+    h2 {
+      font-size: 50px;
+    }
 
-   </footer>
+    .button_header {
+      color: black;
+      width: 100px;
+      height: 100px;
+      margin: 20px 20px 0 5px;
+      font-size: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 3px;
+    }
+
+    /* ---------- BUTTONS ---------- */
+    .button_start, .button_info {
+      color: black;
+      background-color: #EFF1ED;
+      margin: 8px;
+      padding: 4px;
+      border-radius: 3px;
+      width: 150px;
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    .start_info {
+      display: flex;
+      justify-content: center;
+      margin: 3px;
+      padding: 4px;
+    }
+
+    .button_absenden {
+      font-size: 20px;
+      padding: 7px 14px;
+      border-radius: 5px;
+      background-color: #EFF1ED;
+      color: black;
+      font-weight: bold;
+    }
+
+    /* ---------- SPIELERKARTEN ---------- */
+    .außen {
+      display: flex;
+      justify-content: center;
+    }
+
+    .spieler {
+      width: 310px;
+      height: 310px;
+      margin: 10px;
+      perspective: 1000px;
+      position: relative;
+    }
+
+    .spieler-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transition: transform 0.2s;
+      transform-style: preserve-3d;
+    }
+
+    .spieler.flipped .spieler-inner {
+      transform: rotateY(180deg);
+    }
+
+    .spieler-front, .spieler-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 50px;
+      font-weight: bold;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00000055;
+    }
+
+    .spieler-front {
+      background-color: #37393a;
+      color: white;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .spieler-back {
+      background-color: #2a2e43;
+      color: white;
+      transform: rotateY(180deg);
+    }
+
+    /* ---------- INPUT ---------- */
+    input[type="text"] {
+      font-size: 25px;
+      color: black;
+      width: 200px;
+    }
+  </style>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const button = document.getElementById("button_header");
+      const ausgabe = document.getElementById("spieler");
+      const startButton = document.getElementById("button_start");
+      const infoButton = document.querySelector(".button_info");
+
+      const spieler_liste = []; // Namen werden hier gesammelt
+      let spielStartet = false;
+      let aktuellerImposterIndex = null;
+
+      // Spielerkarte erstellen bei Klick auf "+"
+      button.addEventListener("click", function () {
+        const container = document.createElement("div");
+        container.className = "spieler";
+
+        const inner = document.createElement("div");
+        inner.className = "spieler-inner";
+
+        const front = document.createElement("div");
+        front.className = "spieler-front";
+
+        const back = document.createElement("div");
+        back.className = "spieler-back";
+
+        const input = document.createElement("input");
+        input.type = "text";
+        input.placeholder = "Dein Name";
+
+        const submitBtn = document.createElement("button");
+        submitBtn.textContent = "Absenden";
+        submitBtn.className = "button_absenden";
+
+        const output = document.createElement("div");
+
+        // Eingabe abschicken per Enter
+        input.addEventListener("keydown", function (e) {
+          if (e.key === "Enter") {
+            submitBtn.click();
+          }
+        });
+
+        // Name bestätigen und speichern
+        submitBtn.addEventListener("click", function () {
+          const name = input.value.trim();
+          if (name) {
+            front.textContent = name;
+            spieler_liste.push(name);
+            input.remove();
+            submitBtn.remove();
+
+            // Karte darf sich nur drehen, wenn Spiel läuft
+            container.addEventListener("click", function () {
+              if (!spielStartet) return;
+              container.classList.toggle("flipped");
+            });
+          } else {
+            output.textContent = "Bitte gib deinen Namen ein.";
+          }
+        });
+
+        // Elemente zusammenbauen
+        inner.appendChild(front);
+        inner.appendChild(back);
+        container.appendChild(inner);
+        front.appendChild(input);
+        front.appendChild(submitBtn);
+        front.appendChild(output);
+        ausgabe.prepend(container);
+      });
+
+      // Spielstart-Logik
+      startButton.addEventListener("click", async function () {
+        spielStartet = true;
+
+        // Karten zurücksetzen (alle umgedreht -> zurückdrehen)
+        document.querySelectorAll(".spieler.flipped").forEach(el => el.classList.remove("flipped"));
+
+        const anzahlSpieler = spieler_liste.length;
+        if (anzahlSpieler < 3) {
+          console.log("Nicht genug Spieler vorhanden.");
+          return;
+        }
+
+        const index_imposter = Math.floor(Math.random() * anzahlSpieler);
+        const index_anfangen = Math.floor(Math.random() * anzahlSpieler);
+        aktuellerImposterIndex = index_imposter;
+
+        try {
+          const response = await fetch("wörter.json");
+          if (!response.ok) throw new Error("Datei nicht gefunden");
+          const woerter = await response.json();
+          const zufallsWort = woerter[Math.floor(Math.random() * woerter.length)];
+
+          // Spieler-Elemente rückwärts, da prepend genutzt wird
+          const alleSpielerElemente = Array.from(document.querySelectorAll(".spieler")).reverse();
+
+          // Rollen verteilen: Wort oder "IMPOSTER"
+          alleSpielerElemente.forEach((spielerElement, index) => {
+            const rueckseite = spielerElement.querySelector(".spieler-back");
+            rueckseite.textContent = (index === index_imposter) ? "IMPOSTER" : zufallsWort;
+          });
+
+          console.log("Spieleranzahl:", anzahlSpieler);
+          console.log("Imposter:", spieler_liste[index_imposter]);
+          console.log("Zufälliges Wort:", zufallsWort);
+          console.log("Spieler beginnt:", spieler_liste[index_anfangen]);
+        } catch (err) {
+          console.error("Fehler beim Laden der Wörter:", err);
+        }
+      });
+
+      // Ende: Imposter aufdecken
+      infoButton.addEventListener("click", function () {
+        if (aktuellerImposterIndex === null) return;
+        const spielerElemente = Array.from(document.querySelectorAll(".spieler")).reverse();
+        const imposterElement = spielerElemente[aktuellerImposterIndex];
+        if (imposterElement) imposterElement.classList.add("flipped");
+      });
+    });
+  </script>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header1">
+      <h1>Imposter</h1>
+      <h2>Game</h2>
+    </div>
+    <div class="header2">
+      <button class="button_header" id="button_header">+</button>
+    </div>
+  </header>
+
+  <!-- Spielsteuerung -->
+  <div class="start_info">
+    <button class="button_start" id="button_start">Start</button>
+    <button class="button_info">Ende</button>
+  </div>
+
+  <!-- Spielfeld -->
+  <div class="außen">
+    <div id="spieler"></div>
+  </div>
+
+  <footer></footer>
 </body>
 </html>
