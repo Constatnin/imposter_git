@@ -199,6 +199,14 @@
 .dropdown_liste.aktiv {
   max-height: 200px;
 }
+/*beginner*/
+.spieler-front.starter {
+  background-color: #3a4c56 !important; /* Rot */
+  color: white;
+}
+
+
+
 
   </style>
 
@@ -306,10 +314,19 @@ const response = await fetch(dateiname);
           const alleSpielerElemente = Array.from(document.querySelectorAll(".spieler")).reverse();
 
           // Rollen verteilen: Wort oder "IMPOSTER"
-          alleSpielerElemente.forEach((spielerElement, index) => {
-            const rueckseite = spielerElement.querySelector(".spieler-back");
-            rueckseite.textContent = (index === index_imposter) ? "IMPOSTER" : zufallsWort;
-          });
+       alleSpielerElemente.forEach((spielerElement, index) => {
+  const rueckseite = spielerElement.querySelector(".spieler-back");
+  const vorderseite = spielerElement.querySelector(".spieler-front");
+
+  rueckseite.textContent = (index === index_imposter) ? "IMPOSTER" : zufallsWort;
+
+  // Nur Startspieler bekommt rote Vorderseite
+  if (index === index_anfangen) {
+    vorderseite.classList.add("starter");
+  } else {
+    vorderseite.classList.remove("starter");
+  }
+});
 
           console.log("Spieleranzahl:", anzahlSpieler);
           console.log("Imposter:", spieler_liste[index_imposter]);
